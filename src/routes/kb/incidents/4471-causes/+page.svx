@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · what the merged reports show'
 owner: jeremiasz-szczecina
-status: open
+status: closed
 reviewed: 2026-11-23
 signature: v1.eyJzdWIiOiI0MzI3IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTU0NTkzMjYsImV4cCI6MTc5NTU0NTcyNn0._vaIiE5T0b-HUwgX92FGTEgNJ7Gr4NaF8JLS8P1GPRQ
 ---
@@ -13,20 +13,20 @@ signature: v1.eyJzdWIiOiI0MzI3IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYX
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 </script>
 
-Ticket #4471 is marked as one known issue. Its reports have more than one cause, so the queued
-parser fix will not close all of them.
+Ticket #4471 was marked as one known issue, but its reports had more than one cause. Engineering
+closed it on 5 October with a different outcome for each cause.
 
 <CauseTable ticket={4471} />
 
 ## The problems
 
 - **`parser`:** the shared parser reads every date month first, so day-first tenants get the day
-  and month flipped. Tracked in [issue 1](https://github.com/jeremiasz-szczecina/s01e03-what-it-shows/issues/1).
+  and month flipped. **Fixed** by `fix(dates): parse dd/mm for eu locales`. See [issue 1](https://github.com/jeremiasz-szczecina/s01e03-what-it-shows/issues/1).
 - **`hint`:** the booking-v3 form tells people to type month first, then reads the date day first.
-  A parser fix does not change this. Tracked in [issue 2](https://github.com/jeremiasz-szczecina/s01e03-what-it-shows/issues/2).
+  **Won't fix:** the booking-v3 form was retired. See [issue 2](https://github.com/jeremiasz-szczecina/s01e03-what-it-shows/issues/2).
 
 <Callout kind="warn">
-Do not close #4471's reports on the parser fix alone. Check the form reports from booking-v3 tenants separately.
+The parser fix did not fix the hint bug. That bug ended only because the booking-v3 form was retired.
 </Callout>
 
 ## How to tell them apart
@@ -37,7 +37,7 @@ the cause, and intake guesses from the reporter's browser.
 ## Open question
 
 The reports footnoted under the table describe a one-day move or a timing problem, not a day and
-month flip. They stay under `parser` by the desk's rule. If they still reproduce after the parser
-fix, they need their own ticket.
+month flip. They stay under `parser` by the desk's rule. Nobody has confirmed that the parser fix
+resolves them. If they still occur, they need their own ticket.
 
 <RenderStamp {signature} />
