@@ -1,0 +1,43 @@
+---
+layout: runbook
+title: '#4471 · what the merged reports show'
+owner: jeremiasz-szczecina
+status: open
+reviewed: 2026-11-23
+signature: jeremiasz-szczecina
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+Ticket #4471 is marked as one known issue. Its reports have more than one cause, so the queued
+parser fix will not close all of them.
+
+<CauseTable ticket={4471} />
+
+## The problems
+
+- **`parser`:** the shared parser reads every date month first, so day-first tenants get the day
+  and month flipped. Tracked in [issue 1](https://github.com/jeremiasz-szczecina/s01e03-what-it-shows/issues/1).
+- **`hint`:** the booking-v3 form tells people to type month first, then reads the date day first.
+  A parser fix does not change this. Tracked in [issue 2](https://github.com/jeremiasz-szczecina/s01e03-what-it-shows/issues/2).
+
+<Callout kind="warn">
+Do not close #4471's reports on the parser fix alone. Check the form reports from booking-v3 tenants separately.
+</Callout>
+
+## How to tell them apart
+
+Use the tenant and the channel, not the subject line or the intake tag. The subject does not name
+the cause, and intake guesses from the reporter's browser.
+
+## Open question
+
+The reports footnoted under the table describe a one-day move or a timing problem, not a day and
+month flip. They stay under `parser` by the desk's rule. If they still reproduce after the parser
+fix, they need their own ticket.
+
+<RenderStamp {signature} />
